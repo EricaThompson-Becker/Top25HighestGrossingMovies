@@ -15,4 +15,5 @@ Attributes: Movie_id, Distributor, Genre, License
 
 Website from which the data was aquired:
 https://www.kaggle.com/datasets/sanjeetsinghnaik/top-1000-highest-grossing-movies 
+Last Update:January 10th, 2022
  
