@@ -14,6 +14,12 @@ Table 3: Type
 Attributes: Movie_id, Distributor, Genre, License
 
 Website from which the data was aquired:
-https://www.kaggle.com/datasets/sanjeetsinghnaik/top-1000-highest-grossing-movies 
+https://www.kaggle.com/datasets/sanjeetsinghnaik/top-1000-highest-grossing-movies   
 Last Update:January 10th, 2022
  
+**Note From Uploader:**
+Acknowledgements
+This data has been scraped from multiple site and has been added together for performing various datat operations. The data has been taken from idmb, rotten tomatoes and many other sites.
+
+UPDATE:
+The original data contained information about movies and some additional have been added by me. 'None' refers to datapoints that I could not scrape.
