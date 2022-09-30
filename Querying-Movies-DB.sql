@@ -46,4 +46,50 @@ FROM Type
 INNER JOIN Movie ON Movie.id = Type.Movie_id
 WHERE Movie.Runtime LIKE '%1hr%'; 
 
+-- Split Genre into multiple columns 
+-- Separate the genres into multiple columns 
+UPDATE Type SET Genre = REPLACE(Genre, '[', '');
+UPDATE Type SET Genre = REPLACE(Genre, ']', '');
+UPDATE Type SET Genre = REPLACE(genre, ',','.');
+
+SELECT
+  SUBSTRING_INDEX(genre,' .', 1) AS Genre1,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(genre, ' ', 2),'.', -1) AS Genre2, 
+  SUBSTRING_INDEX(genre,'.', -1) AS Genre3
+FROM Type
+
+SELECT
+    @genre_nums := 1 + LENGTH(genre) - LENGTH(REPLACE(genre, '.', '')) AS genre_nums,
+    SUBSTRING_INDEX(genre, '.', 1) AS Genre1,
+    IF(@genre_nums > 1, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 2), '.', -1), '') AS Genre2,
+    IF(@genre_nums > 2, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 3), '.', -1), '') AS Genre3,
+    IF(@genre_nums > 3, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 4), '.', -1), '') AS Genre4,
+    IF(@genre_nums > 4, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 5), '.', -1), '') AS Genre5,
+    IF(@genre_nums > 5, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 6), '.', -1), '') AS Genre6
+FROM Type;
+
+CREATE TEMPORARY TABLE Genre (
+Genre_nums INT,
+Genre1 Char(20),
+Genre2 CHAR(20),
+Genre3 CHAR(20),
+Genre4 CHAR(20),
+Genre5 CHAR(20),
+Genre6 CHAR(20)
+);
+INSERT INTO Genre
+SELECT
+    @genre_nums := 1 + LENGTH(genre) - LENGTH(REPLACE(genre, '.', '')) AS genre_nums,
+    SUBSTRING_INDEX(genre, '.', 1) AS Genre1,
+    IF(@genre_nums > 1, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 2), '.', -1), '') AS Genre2,
+    IF(@genre_nums > 2, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 3), '.', -1), '') AS Genre3,
+    IF(@genre_nums > 3, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 4), '.', -1), '') AS Genre4,
+    IF(@genre_nums > 4, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 5), '.', -1), '') AS Genre5,
+    IF(@genre_nums > 5, SUBSTRING_INDEX(SUBSTRING_INDEX(genre, '.', 6), '.', -1), '') AS Genre6
+FROM Type;
+
+SELECT * FROM Genre;
+
+
+
 
